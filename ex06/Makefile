@@ -1,6 +1,6 @@
 file = main.cpp Harl.cpp
 
-NAME = Harl
+NAME = harlFilter
 
 cc = c++
 flag = -Wall -Wextra -Werror -std=c++98 -g
