@@ -10,8 +10,10 @@ int main(int ac, char *ag[])
 	std::string		oldStr;
 	std::string		newStr;
 	std::string		buff;
+	std::string		allFile;
+	size_t			poss;
 	std::ifstream	suport;
-	std::ofstream	exitfile;
+	std::ofstream	exitFile;
 	Error			status;
 
 	if (ac != 4)
@@ -23,19 +25,27 @@ int main(int ac, char *ag[])
 	if(!suport.is_open())
 		return(status.badInFile(2));
 	newFile = file + ".replace";
-	exitfile.open(newFile.c_str());
-	if(!exitfile.is_open())
+	exitFile.open(newFile.c_str());
+	if(!exitFile.is_open())
 		return(status.badOutFile(2));
 	while(getline(suport, buff))
 	{
-		if (buff == oldStr)
-			exitfile << newStr << std::endl;
-		else
-		{
-			buff += "\n";
-			exitfile << buff;
-		}
+		buff += "\n";
+		allFile += buff;
 	}
+	allFile = allFile.substr(0, allFile.length() - 1);
+	do{
+		poss = allFile.find(oldStr);
+		if (poss == 0)
+			exitFile << newStr;
+		exitFile << allFile.substr(0, poss);
+		if (poss > 0 && poss != std::string::npos)
+			exitFile << newStr;
+		if ((long long int)allFile.length() - (long long int)oldStr.length() > 0) 
+		{
+			allFile = allFile.substr(poss + oldStr.length(), allFile.length());
+		}
+	}while(poss != std::string::npos);
 	suport.close();
-	exitfile.close();
+	exitFile.close();
 }

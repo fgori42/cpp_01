@@ -2,7 +2,7 @@
 
 int	main()
 {
-	Zombie *newOne;
+	Zombie *newOne = ;
 	Zombie	Homer("Homer");
 
 	Homer.announce();
